@@ -24,6 +24,7 @@ namespace battleMonsters
             MEDIUM,
             LARGE
         }
+
         #region FIELDS
 
         private string _name;
@@ -62,7 +63,7 @@ namespace battleMonsters
 
         #region METHODS
 
-        public string EnemyBattleMonsters()
+        public string AllBattleMonsters()
         {
             return _name + " is a " + _monsterSize + " monster with the element of " + _monsterElement + ".";
         }

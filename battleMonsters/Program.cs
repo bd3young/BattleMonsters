@@ -82,6 +82,12 @@ namespace battleMonsters
                     case "C":
                         DisplayAndEquipYourBattleMonster(yourBattleMonsters, equippedMonster);
                         break;
+                    case "D":
+                        
+                        break;
+                    case "E":
+                        
+                        break;
                     case "Q":
                         runMenu = false;
                         runApp = false;
@@ -99,8 +105,50 @@ namespace battleMonsters
 
         static void DisplayAndEquipYourBattleMonster(List<BattleMonster> yourBattleMonsters, BattleMonster equippedMonster)
         {
-            
-        }
+			bool monsterNotFound = true;
+			string monsterChoice;
+
+			while (monsterNotFound)
+			{
+				Console.Clear();
+				DisplayHeader("\tYour Battle Monsters");
+
+				foreach (BattleMonster yourBattleMonster in yourBattleMonsters)
+				{
+					Console.WriteLine();
+					Console.WriteLine(yourBattleMonster.AllBattleMonsters());
+				}
+
+				//
+				// equip a monster
+				//
+
+				Console.WriteLine();
+				Console.Write("Pick a monster to equip: ");
+				monsterChoice = Console.ReadLine();
+
+				foreach (BattleMonster yourBattleMonster in yourBattleMonsters)
+				{
+					if (yourBattleMonster.Name == monsterChoice)
+					{
+						equippedMonster = yourBattleMonster;
+						
+						monsterNotFound = false;
+					}
+				}
+				if (monsterNotFound)
+				{
+					Console.WriteLine("Unable to locate your battle monster.");
+                    Console.WriteLine();
+                    Console.WriteLine("Press any key to enter another battle monster.");
+                    Console.ReadKey();						
+				}
+			}
+
+
+
+			DisplayContinuePrompt();
+		}
 
         static void DisplayCreateYourOwnBattleMonster(List<BattleMonster> yourBattleMonsters)
         {
@@ -159,7 +207,7 @@ namespace battleMonsters
             foreach (BattleMonster enemyBattleMonster in enemyBattleMonsters)
             {
                 Console.WriteLine();
-                Console.WriteLine(enemyBattleMonster.EnemyBattleMonsters());
+                Console.WriteLine(enemyBattleMonster.AllBattleMonsters());
             }
 
             DisplayContinuePrompt();
