@@ -11,6 +11,7 @@ namespace battleMonsters
 
         public enum Element
         {
+            returnToMenu,
             GRASS,
             WATER,
             FIRE
@@ -18,6 +19,7 @@ namespace battleMonsters
 
         public enum Size
         {
+            returnToMenu,
             SMALL,
             MEDIUM,
             LARGE

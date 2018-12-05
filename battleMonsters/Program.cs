@@ -61,14 +61,12 @@ namespace battleMonsters
 
             while (runMenu)
             {           
-                DisplayHeader("Main Menu");
+                DisplayHeader("Battle Monsters Main Menu");
                 Console.WriteLine();
-                Console.WriteLine("A) Display All Battle Monsters.");
-                Console.WriteLine("B) Create your own Battle Monsters.");
-                Console.WriteLine("C) ");
-                Console.WriteLine("D) Battle Enemy Battle Monster.");
-                Console.WriteLine("E) Show Battle Tree");
-                Console.WriteLine("F) ");
+                Console.WriteLine("A) Display All Battle Monsters");
+                Console.WriteLine("B) Create your own Battle Monsters");
+                Console.WriteLine("C) Battle Enemy Battle Monster");
+                Console.WriteLine("D) Show Battle Tree");
                 Console.WriteLine("Q) Quit");
                 Console.WriteLine();
                 Console.Write("Enter Menu Choice: ");
@@ -83,14 +81,11 @@ namespace battleMonsters
                         DisplayCreateYourOwnBattleMonster(yourBattleMonsters);
                         break;
                     case "C":
-						
-						break;
-                    case "D":
 						DisplayBattleBothBattleMonsters(enemyBattleMonsters, yourBattleMonsters);
 						break;
-                    case "E":
-                        
-                        break;
+                    case "D":
+                        DisplayBattleTree();
+						break;
                     case "Q":
                         runMenu = false;
                         runApp = false;
@@ -106,7 +101,23 @@ namespace battleMonsters
             return runApp;
         }
 
-		static void DisplayBattleBothBattleMonsters(List<BattleMonster> enemyBattleMonsters, List<BattleMonster> yourBattleMonsters)
+        static void DisplayBattleTree()
+        {
+            DisplayHeader("\tBattle Tree");
+
+            Console.WriteLine("\t\t Battle trees rotate clockwise.");
+            Console.WriteLine();
+            Console.WriteLine("\t----------------------------------------");
+            Console.WriteLine("\t|         GRASS --->|      SMALL   --->|");
+            Console.WriteLine("\t|         /  \\      |     /    \\       |");
+            Console.WriteLine("\t|        /    \\     |    /      \\      |");
+            Console.WriteLine("\t|     FIRE----WATER | MEDIUM----LARGE  |");
+            Console.WriteLine("\t----------------------------------------");
+
+            DisplayContinuePrompt();
+        }
+
+        static void DisplayBattleBothBattleMonsters(List<BattleMonster> enemyBattleMonsters, List<BattleMonster> yourBattleMonsters)
 		{
 
 			BattleMonster enemyEquippedMonster = null;
@@ -114,147 +125,346 @@ namespace battleMonsters
 
 			equippedMonster = DisplayAndEquipYourBattleMonster(yourBattleMonsters, equippedMonster);
 
-			enemyEquippedMonster = DisplayAndEquipEnemyBattleMonster(enemyBattleMonsters, enemyEquippedMonster);
+			enemyEquippedMonster = DisplayAndEquipEnemyBattleMonster(enemyBattleMonsters, enemyEquippedMonster, equippedMonster);
 
 
 			//
 			// begin the battle
 			//
 
-			Console.Clear();
-			Console.WriteLine();
-			Console.WriteLine($" The battle between {equippedMonster.Name} and {enemyEquippedMonster.Name} is about to begin.");
-
 			DisplayContinuePrompt();
 
-			DisplayCompareElements(enemyEquippedMonster, equippedMonster);
+			DisplayCompareElements(enemyBattleMonsters, enemyEquippedMonster, yourBattleMonsters, equippedMonster);
+
+
 		}
 
-		static void DisplayCompareElements(BattleMonster enemyEquippedMonster, BattleMonster equippedMonster)
+		static void DisplayCompareElements(List<BattleMonster> enemyBattleMonsters, BattleMonster enemyEquippedMonster, List<BattleMonster> yourBattleMonsters, BattleMonster equippedMonster)
 		{
-			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.GRASS && equippedMonster.monsterElement == BattleMonster.Element.GRASS)
+
+            //
+            // grass / grass
+            //
+			if (equippedMonster.monsterElement == BattleMonster.Element.GRASS && enemyEquippedMonster.monsterElement == BattleMonster.Element.GRASS)
 			{
 				DisplayHeader("\t Battle Has Begun");
 
-				Console.WriteLine($"It seems that {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element and {equippedMonster.Name}'s {equippedMonster.monsterElement} element have the two in a stailmate!");
+				Console.WriteLine($"It seems that {equippedMonster.Name}'s {equippedMonster.monsterElement} element and {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element have the two in a stailmate!");
 				Console.WriteLine();
 				Console.WriteLine("\t Press any key to continue the battle.");
 				Console.ReadKey();
 
-				DisplayCompareSize(enemyEquippedMonster, equippedMonster);
+				DisplayCompareSize(enemyBattleMonsters, enemyEquippedMonster, yourBattleMonsters, equippedMonster);
 			}
 
-			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.GRASS && equippedMonster.monsterElement == BattleMonster.Element.WATER)
+            //
+            // grass / water
+            //
+			if (equippedMonster.monsterElement == BattleMonster.Element.GRASS && enemyEquippedMonster.monsterElement == BattleMonster.Element.WATER)
 			{
+                DisplayHeader("\t Battle Has Begun");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element has overpowered {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
+                Console.WriteLine($"{enemyEquippedMonster.Name} feints.");
+                Console.WriteLine();
+                enemyBattleMonsters.Remove(enemyEquippedMonster); 
+                Console.WriteLine("\t Press any key to leave the battle.");
+                Console.ReadKey();
+            }
 
-			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.GRASS && equippedMonster.monsterElement == BattleMonster.Element.FIRE)
+            //
+            // grass / fire
+            //
+			if (equippedMonster.monsterElement == BattleMonster.Element.GRASS && enemyEquippedMonster.monsterElement == BattleMonster.Element.FIRE)
 			{
+                DisplayHeader("\t Battle Has Begun");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element is weak against {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
+                Console.WriteLine($"{equippedMonster.Name} feints.");
+                Console.WriteLine();
+                yourBattleMonsters.Remove(equippedMonster);
+                Console.WriteLine("\t Press any key to leave the battle.");
+                Console.ReadKey();
+                DisplayBattleTree();
+            }
 
-			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.WATER && equippedMonster.monsterElement == BattleMonster.Element.GRASS)
+            //
+            // water / grass
+            //
+			if (equippedMonster.monsterElement == BattleMonster.Element.WATER && enemyEquippedMonster.monsterElement == BattleMonster.Element.GRASS)
 			{
+                DisplayHeader("\t Battle Has Begun");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element is weak against {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
+                Console.WriteLine($"{equippedMonster.Name} feints.");
+                Console.WriteLine();
+                yourBattleMonsters.Remove(equippedMonster);
+                Console.WriteLine("\t Press any key to leave the battle.");
+                Console.ReadKey();
+                DisplayBattleTree();
+            }
 
-			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.WATER && equippedMonster.monsterElement == BattleMonster.Element.WATER)
+            //
+            // water / water
+            //
+			if (equippedMonster.monsterElement == BattleMonster.Element.WATER && enemyEquippedMonster.monsterElement == BattleMonster.Element.WATER)
 			{
+                DisplayHeader("\t Battle Has Begun");
 
-			}
+                Console.WriteLine($"It seems that {equippedMonster.Name}'s {equippedMonster.monsterElement} element and {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element have the two in a stailmate!");
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to continue the battle.");
+                Console.ReadKey();
 
-			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.WATER && equippedMonster.monsterElement == BattleMonster.Element.FIRE)
+                DisplayCompareSize(enemyBattleMonsters, enemyEquippedMonster, yourBattleMonsters, equippedMonster);
+            }
+
+            //
+            // water / fire
+            //
+			if (equippedMonster.monsterElement == BattleMonster.Element.WATER && enemyEquippedMonster.monsterElement == BattleMonster.Element.FIRE)
 			{
+                DisplayHeader("\t Battle Has Begun");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element has overpowered {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
+                Console.WriteLine($"{enemyEquippedMonster.Name} feints.");
+                Console.WriteLine();
+                enemyBattleMonsters.Remove(enemyEquippedMonster);
+                Console.WriteLine("\t Press any key to leave the battle.");
+                Console.ReadKey();
+            }
 
-			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.FIRE && equippedMonster.monsterElement == BattleMonster.Element.GRASS)
+            //
+            // fire / grass
+            //
+			if (equippedMonster.monsterElement == BattleMonster.Element.FIRE && enemyEquippedMonster.monsterElement == BattleMonster.Element.GRASS)
 			{
+                DisplayHeader("\t Battle Has Begun");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element has overpowered {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
+                Console.WriteLine($"{enemyEquippedMonster.Name} feints.");
+                Console.WriteLine();
+                enemyBattleMonsters.Remove(enemyEquippedMonster);
+                Console.WriteLine("\t Press any key to leave the battle.");
+                Console.ReadKey();
+            }
 
-			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.FIRE && equippedMonster.monsterElement == BattleMonster.Element.WATER)
+            //
+            // fire / water
+            //
+			if (equippedMonster.monsterElement == BattleMonster.Element.FIRE && enemyEquippedMonster.monsterElement == BattleMonster.Element.WATER)
 			{
+                DisplayHeader("\t Battle Has Begun");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element is weak against {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
+                Console.WriteLine($"{equippedMonster.Name} feints.");
+                Console.WriteLine();
+                yourBattleMonsters.Remove(equippedMonster);
+                Console.WriteLine("\t Press any key to leave the battle.");
+                Console.ReadKey();
+                DisplayBattleTree();
+            }
 
-			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.FIRE && equippedMonster.monsterElement == BattleMonster.Element.FIRE)
+            //
+            // fire / fire
+            //
+			if (equippedMonster.monsterElement == BattleMonster.Element.FIRE && enemyEquippedMonster.monsterElement == BattleMonster.Element.FIRE)
 			{
+                DisplayHeader("\t Battle Has Begun");
 
-			}
+                Console.WriteLine($"It seems that {equippedMonster.Name}'s {equippedMonster.monsterElement} element and {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element have the two in a stailmate!");
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to continue the battle.");
+                Console.ReadKey();
+
+                DisplayCompareSize(enemyBattleMonsters, enemyEquippedMonster, yourBattleMonsters, equippedMonster);
+            }
+            if ((equippedMonster.monsterElement == BattleMonster.Element.FIRE || equippedMonster.monsterElement == BattleMonster.Element.GRASS || equippedMonster.monsterElement == BattleMonster.Element.WATER) && enemyEquippedMonster.monsterElement == BattleMonster.Element.returnToMenu)
+            {
+                DisplayHeader("\tReturning to Battle Monsters Menu");
+                Console.WriteLine("Press any key to return to menu.");
+                enemyBattleMonsters.Remove(enemyEquippedMonster);
+                DisplayContinuePrompt();           
+            }
 			
 		}
 
-		static void DisplayCompareSize(BattleMonster enemyEquippedMonster, BattleMonster equippedMonster)
-		{
-			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.SMALL && equippedMonster.monsterSize == BattleMonster.Size.SMALL)
+		static void DisplayCompareSize(List<BattleMonster> enemyBattleMonsters, BattleMonster enemyEquippedMonster, List<BattleMonster> yourBattleMonsters, BattleMonster equippedMonster)
+		{   
+            
+            //
+            // small / small
+            //
+			if (equippedMonster.monsterSize == BattleMonster.Size.SMALL && enemyEquippedMonster.monsterSize == BattleMonster.Size.SMALL)
 			{
+                DisplayHeader("The Battle Continues");
 
-			}
+                Console.WriteLine($"Both {equippedMonster.Name} and {enemyEquippedMonster.Name} have given it there all have.");
+                Console.WriteLine($"With {equippedMonster.Name}'s {equippedMonster.monsterSize} size and {enemyEquippedMonster.Name} {enemyEquippedMonster.monsterSize} size, they have exausted everything and both feint.");
+                yourBattleMonsters.Remove(equippedMonster);
+                enemyBattleMonsters.Remove(enemyEquippedMonster);
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to leave the battle ");
+                Console.ReadKey();
+                DisplayBattleTree();
+            }
 
-			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.SMALL && equippedMonster.monsterSize == BattleMonster.Size.MEDIUM)
+            //
+            // small / medium
+            //
+			if (equippedMonster.monsterSize == BattleMonster.Size.SMALL && enemyEquippedMonster.monsterSize == BattleMonster.Size.MEDIUM)
 			{
+                DisplayHeader("The Battle Continues");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size is overpowered by {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size.");
+                Console.WriteLine($"{equippedMonster.Name} feints.");
+                yourBattleMonsters.Remove(equippedMonster);
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to leave the battle ");
+                Console.ReadKey();
+                DisplayBattleTree();
+            }
 
-			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.SMALL && equippedMonster.monsterSize == BattleMonster.Size.LARGE)
+            //
+            // small / large
+            //
+			if (equippedMonster.monsterSize == BattleMonster.Size.SMALL && enemyEquippedMonster.monsterSize == BattleMonster.Size.LARGE)
 			{
+                DisplayHeader("The Battle Continues");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size is to fast for {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size to hit.");
+                Console.WriteLine($"{enemyEquippedMonster.Name} feints from exhaustion.");
+                enemyBattleMonsters.Remove(enemyEquippedMonster);
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to leave the battle ");
+                Console.ReadKey();
+            }
 
-			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.MEDIUM && equippedMonster.monsterSize == BattleMonster.Size.SMALL)
+            //
+            // medium / small
+            //
+			if (equippedMonster.monsterSize == BattleMonster.Size.MEDIUM && enemyEquippedMonster.monsterSize == BattleMonster.Size.SMALL)
 			{
+                DisplayHeader("The Battle Continues");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size overpowers {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size.");
+                Console.WriteLine($"{enemyEquippedMonster.Name} feints.");
+                enemyBattleMonsters.Remove(enemyEquippedMonster);
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to leave the battle ");
+                Console.ReadKey();
+            }
 
-			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.MEDIUM && equippedMonster.monsterSize == BattleMonster.Size.MEDIUM)
+            //
+            // medium / medium
+            //
+			if (equippedMonster.monsterSize == BattleMonster.Size.MEDIUM && enemyEquippedMonster.monsterSize == BattleMonster.Size.MEDIUM)
 			{
+                DisplayHeader("The Battle Continues");
 
-			}
+                Console.WriteLine($"Both {equippedMonster.Name} and {enemyEquippedMonster.Name} have given it there all have.");
+                Console.WriteLine($"With {equippedMonster.Name}'s {equippedMonster.monsterSize} size and {enemyEquippedMonster.Name} {enemyEquippedMonster.monsterSize} size, they have exausted everything and both feint.");
+                yourBattleMonsters.Remove(equippedMonster);
+                enemyBattleMonsters.Remove(enemyEquippedMonster);
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to leave the battle ");
+                Console.ReadKey();
+                DisplayBattleTree();
+            }
 
-			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.MEDIUM && equippedMonster.monsterSize == BattleMonster.Size.LARGE)
+            //
+            // medium / large
+            //
+			if (equippedMonster.monsterSize == BattleMonster.Size.MEDIUM && enemyEquippedMonster.monsterSize == BattleMonster.Size.LARGE)
 			{
+                DisplayHeader("The Battle Continues");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size is overpowered by {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size.");
+                Console.WriteLine($"{equippedMonster.Name} feints.");
+                yourBattleMonsters.Remove(equippedMonster);
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to leave the battle ");
+                Console.ReadKey();
+                DisplayBattleTree();
+            }
 
-			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.LARGE && equippedMonster.monsterSize == BattleMonster.Size.SMALL)
+            //
+            // large / small
+            //
+			if (equippedMonster.monsterSize == BattleMonster.Size.LARGE && enemyEquippedMonster.monsterSize == BattleMonster.Size.SMALL)
 			{
+                DisplayHeader("The Battle Continues");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size is to slow to hit {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size.");
+                Console.WriteLine($"{equippedMonster.Name} feints from exhaustion.");
+                yourBattleMonsters.Remove(equippedMonster);
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to leave the battle ");
+                Console.ReadKey();
+                DisplayBattleTree();
+            }
 
-			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.LARGE && equippedMonster.monsterSize == BattleMonster.Size.MEDIUM)
+            //
+            // large / medium
+            //
+			if (equippedMonster.monsterSize == BattleMonster.Size.LARGE && enemyEquippedMonster.monsterSize == BattleMonster.Size.MEDIUM)
 			{
+                DisplayHeader("The Battle Continues");
 
-			}
+                Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size overpowers {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size.");
+                Console.WriteLine($"{enemyEquippedMonster.Name} feints.");
+                enemyBattleMonsters.Remove(enemyEquippedMonster);
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to leave the battle ");
+                Console.ReadKey();
+            }
 
-			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.LARGE && equippedMonster.monsterSize == BattleMonster.Size.LARGE)
+            //
+            // large / large
+            //
+			if (equippedMonster.monsterSize == BattleMonster.Size.LARGE && enemyEquippedMonster.monsterSize == BattleMonster.Size.LARGE)
 			{
+                DisplayHeader("The Battle Continues");
 
-			}
+                Console.WriteLine($"Both {equippedMonster.Name} and {enemyEquippedMonster.Name} have given it there all have.");
+                Console.WriteLine($"With {equippedMonster.Name}'s {equippedMonster.monsterSize} size and {enemyEquippedMonster.Name} {enemyEquippedMonster.monsterSize} size, they have exausted everything and both feint.");
+                yourBattleMonsters.Remove(equippedMonster);
+                enemyBattleMonsters.Remove(enemyEquippedMonster);
+                Console.WriteLine();
+                Console.WriteLine("\t Press any key to leave the battle ");
+                Console.ReadKey();
+                DisplayBattleTree();
+            }
 		}
 
-		static BattleMonster DisplayAndEquipEnemyBattleMonster(List<BattleMonster> enemyBattleMonsters, BattleMonster enemyEquippedMonster)
+		static BattleMonster DisplayAndEquipEnemyBattleMonster(List<BattleMonster> enemyBattleMonsters, BattleMonster enemyEquippedMonster, BattleMonster equippedMonster)
 		{
+            string userResponse;
 			bool monsterNotFound = true;
 			string monsterChoice;
 
 			while (monsterNotFound)
 			{
-				Console.Clear();
-				DisplayHeader("\tEnemy Battle Monsters");
+                Console.Clear();
+                Console.WriteLine("---------------------------------------------------");
+                Console.WriteLine($"Your Currently Equipped Monster: {equippedMonster.AllBattleMonsters()}");
+                Console.WriteLine("---------------------------------------------------");
+                Console.WriteLine("\tEnemy Battle Monsters");
+                Console.WriteLine("---------------------------------------------------");
 
-				foreach (BattleMonster enemyBattleMonster in enemyBattleMonsters)
-				{
-					Console.WriteLine();
-					Console.WriteLine(enemyBattleMonster.AllBattleMonsters());
-				}
+                foreach (BattleMonster enemyBattleMonster in enemyBattleMonsters)
+                {
 
-				//
-				// pick enemy battle monster
-				//
+                    Console.WriteLine(enemyBattleMonster.AllBattleMonsters());
 
-				Console.WriteLine();
+                }
+                Console.WriteLine("---------------------------------------------------");
+
+                //
+                // pick enemy battle monster
+                //
+
+                Console.WriteLine();
 				Console.Write("Pick a monster to battle: ");
 				monsterChoice = Console.ReadLine();
 
@@ -272,8 +482,18 @@ namespace battleMonsters
 				{
 					Console.WriteLine("Unable to locate enemy battle monster.");
 					Console.WriteLine();
-					Console.WriteLine("Press any key to enter another battle monster.");
-					Console.ReadKey();
+					Console.Write("Are there any more Monster to Battle [YES or NO]:");
+					userResponse = Console.ReadLine().ToUpper();
+                    if (userResponse == "NO")
+                    {
+                        BattleMonster returnToMenu = new BattleMonster();
+                        returnToMenu.Name = "Returntomenu";
+                        returnToMenu.monsterElement = BattleMonster.Element.returnToMenu;
+                        returnToMenu.monsterSize = BattleMonster.Size.returnToMenu;
+
+                        enemyEquippedMonster = returnToMenu;
+                        monsterNotFound = false;
+                    }
 				}
 			}
 			return enemyEquippedMonster;
@@ -281,25 +501,30 @@ namespace battleMonsters
 
 		static BattleMonster DisplayAndEquipYourBattleMonster(List<BattleMonster> yourBattleMonsters, BattleMonster equippedMonster)
         {
+            string userResponse;
 			bool monsterNotFound = true;
 			string monsterChoice;
 
 			while (monsterNotFound)
 			{
 				Console.Clear();
-				DisplayHeader("\tYour Battle Monsters");
+                Console.WriteLine();
+                Console.WriteLine("\tYour Battle Monsters");
+                Console.WriteLine("---------------------------------------------------");
 
-				foreach (BattleMonster yourBattleMonster in yourBattleMonsters)
-				{
-					Console.WriteLine();
-					Console.WriteLine(yourBattleMonster.AllBattleMonsters());
-				}
+                foreach (BattleMonster yourBattleMonster in yourBattleMonsters)
+                {
 
-				//
-				// equip a monster
-				//
+                    Console.WriteLine(yourBattleMonster.AllBattleMonsters());
 
-				Console.WriteLine();
+                }
+                Console.WriteLine("---------------------------------------------------");
+
+                //
+                // equip a monster
+                //
+
+                Console.WriteLine();
 				Console.Write("Pick a monster to equip: ");
 				monsterChoice = Console.ReadLine();
 
@@ -317,8 +542,13 @@ namespace battleMonsters
 				{
 					Console.WriteLine("Unable to locate your battle monster.");
                     Console.WriteLine();
-                    Console.WriteLine("Press any key to enter another battle monster.");
-                    Console.ReadKey();						
+                    Console.Write("Would you like to create a Battle Monster to equip? [YES or NO]: ");
+                    userResponse = Console.ReadLine().ToUpper();
+                    if (userResponse == "YES")
+                    {
+                        DisplayCreateYourOwnBattleMonster(yourBattleMonsters);
+                    }
+
 				}
 			}
 			return equippedMonster;
