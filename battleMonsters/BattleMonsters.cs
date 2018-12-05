@@ -13,9 +13,7 @@ namespace battleMonsters
         {
             GRASS,
             WATER,
-            FIRE,
-            LIGHT,
-            DARK
+            FIRE
         }
 
         public enum Size

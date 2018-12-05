@@ -12,58 +12,61 @@ namespace battleMonsters
         {
             bool runApp = true;
 
-            DisplayOpeningScreen();
+			//
+			// instantiate battle monsters
+			//
+
+
+			BattleMonster kitten;
+			kitten = InstantiateBattleMonsterKitten();
+
+			BattleMonster gilroy;
+			gilroy = InstantiateBattleMonsterGilroy();
+
+			BattleMonster gargle;
+			gargle = InstantiateBattleMonsterGargle();
+
+			BattleMonster stump;
+			stump = InstantiateBattleMonsterStump();
+
+			BattleMonster fury;
+			fury = InstantiateBattleMonsterFury();
+
+			List<BattleMonster> enemyBattleMonsters = new List<BattleMonster>();
+			enemyBattleMonsters.Add(kitten);
+			enemyBattleMonsters.Add(gilroy);
+			enemyBattleMonsters.Add(gargle);
+			enemyBattleMonsters.Add(stump);
+			enemyBattleMonsters.Add(fury);
+
+			List<BattleMonster> yourBattleMonsters = new List<BattleMonster>();
+			//BattleMonster equippedMonster = null;
+			//BattleMonster enemyEquippedMonster = null;
+
+			DisplayOpeningScreen();
             while (runApp)
             {
-                runApp = DisplayMainMenu(runApp);
+                runApp = DisplayMainMenu(runApp, enemyBattleMonsters, yourBattleMonsters);
             }
             DisplayClosingScreen();
         }
 
-        static bool DisplayMainMenu(bool runApp)
+        static bool DisplayMainMenu(bool runApp, List<BattleMonster> enemyBattleMonsters, List<BattleMonster> yourBattleMonsters)
         {
             bool runMenu = true;
 
             string userMenuChoice;
 
-            //
-            // instantiate battle monsters
-            //
 
-
-            BattleMonster kitten;
-            kitten = InstantiateBattleMonsterKitten();
-
-            BattleMonster gilroy;
-            gilroy = InstantiateBattleMonsterGilroy();
-
-            BattleMonster gargle;
-            gargle = InstantiateBattleMonsterGargle();
-
-            BattleMonster stump;
-            stump = InstantiateBattleMonsterStump();
-
-            BattleMonster fury;
-            fury = InstantiateBattleMonsterFury();
-
-            List<BattleMonster> enemyBattleMonsters = new List<BattleMonster>();
-            enemyBattleMonsters.Add(kitten);
-            enemyBattleMonsters.Add(gilroy);
-            enemyBattleMonsters.Add(gargle);
-            enemyBattleMonsters.Add(stump);
-            enemyBattleMonsters.Add(fury);
-
-            List<BattleMonster> yourBattleMonsters = new List<BattleMonster>();
-            BattleMonster equippedMonster = null;
 
             while (runMenu)
             {           
                 DisplayHeader("Main Menu");
                 Console.WriteLine();
-                Console.WriteLine("A) Display enemy Battle Monsters.");
+                Console.WriteLine("A) Display All Battle Monsters.");
                 Console.WriteLine("B) Create your own Battle Monsters.");
-                Console.WriteLine("C) Display and Equip your Battle Monsters");
-                Console.WriteLine("D) Battle enemy Battle Monster.");
+                Console.WriteLine("C) ");
+                Console.WriteLine("D) Battle Enemy Battle Monster.");
                 Console.WriteLine("E) Show Battle Tree");
                 Console.WriteLine("F) ");
                 Console.WriteLine("Q) Quit");
@@ -74,17 +77,17 @@ namespace battleMonsters
                 switch (userMenuChoice)
                 {
                     case "A":
-                        DisplayEnemyBattleMonsters(enemyBattleMonsters);
+                        DisplayAllBattleMonsters(enemyBattleMonsters, yourBattleMonsters);
                         break;
                     case "B":
                         DisplayCreateYourOwnBattleMonster(yourBattleMonsters);
                         break;
                     case "C":
-                        DisplayAndEquipYourBattleMonster(yourBattleMonsters, equippedMonster);
-                        break;
+						
+						break;
                     case "D":
-                        
-                        break;
+						DisplayBattleBothBattleMonsters(enemyBattleMonsters, yourBattleMonsters);
+						break;
                     case "E":
                         
                         break;
@@ -103,7 +106,180 @@ namespace battleMonsters
             return runApp;
         }
 
-        static void DisplayAndEquipYourBattleMonster(List<BattleMonster> yourBattleMonsters, BattleMonster equippedMonster)
+		static void DisplayBattleBothBattleMonsters(List<BattleMonster> enemyBattleMonsters, List<BattleMonster> yourBattleMonsters)
+		{
+
+			BattleMonster enemyEquippedMonster = null;
+			BattleMonster equippedMonster = null;
+
+			equippedMonster = DisplayAndEquipYourBattleMonster(yourBattleMonsters, equippedMonster);
+
+			enemyEquippedMonster = DisplayAndEquipEnemyBattleMonster(enemyBattleMonsters, enemyEquippedMonster);
+
+
+			//
+			// begin the battle
+			//
+
+			Console.Clear();
+			Console.WriteLine();
+			Console.WriteLine($" The battle between {equippedMonster.Name} and {enemyEquippedMonster.Name} is about to begin.");
+
+			DisplayContinuePrompt();
+
+			DisplayCompareElements(enemyEquippedMonster, equippedMonster);
+		}
+
+		static void DisplayCompareElements(BattleMonster enemyEquippedMonster, BattleMonster equippedMonster)
+		{
+			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.GRASS && equippedMonster.monsterElement == BattleMonster.Element.GRASS)
+			{
+				DisplayHeader("\t Battle Has Begun");
+
+				Console.WriteLine($"It seems that {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element and {equippedMonster.Name}'s {equippedMonster.monsterElement} element have the two in a stailmate!");
+				Console.WriteLine();
+				Console.WriteLine("\t Press any key to continue the battle.");
+				Console.ReadKey();
+
+				DisplayCompareSize(enemyEquippedMonster, equippedMonster);
+			}
+
+			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.GRASS && equippedMonster.monsterElement == BattleMonster.Element.WATER)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.GRASS && equippedMonster.monsterElement == BattleMonster.Element.FIRE)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.WATER && equippedMonster.monsterElement == BattleMonster.Element.GRASS)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.WATER && equippedMonster.monsterElement == BattleMonster.Element.WATER)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.WATER && equippedMonster.monsterElement == BattleMonster.Element.FIRE)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.FIRE && equippedMonster.monsterElement == BattleMonster.Element.GRASS)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.FIRE && equippedMonster.monsterElement == BattleMonster.Element.WATER)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterElement == BattleMonster.Element.FIRE && equippedMonster.monsterElement == BattleMonster.Element.FIRE)
+			{
+
+			}
+			
+		}
+
+		static void DisplayCompareSize(BattleMonster enemyEquippedMonster, BattleMonster equippedMonster)
+		{
+			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.SMALL && equippedMonster.monsterSize == BattleMonster.Size.SMALL)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.SMALL && equippedMonster.monsterSize == BattleMonster.Size.MEDIUM)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.SMALL && equippedMonster.monsterSize == BattleMonster.Size.LARGE)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.MEDIUM && equippedMonster.monsterSize == BattleMonster.Size.SMALL)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.MEDIUM && equippedMonster.monsterSize == BattleMonster.Size.MEDIUM)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.MEDIUM && equippedMonster.monsterSize == BattleMonster.Size.LARGE)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.LARGE && equippedMonster.monsterSize == BattleMonster.Size.SMALL)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.LARGE && equippedMonster.monsterSize == BattleMonster.Size.MEDIUM)
+			{
+
+			}
+
+			if (enemyEquippedMonster.monsterSize == BattleMonster.Size.LARGE && equippedMonster.monsterSize == BattleMonster.Size.LARGE)
+			{
+
+			}
+		}
+
+		static BattleMonster DisplayAndEquipEnemyBattleMonster(List<BattleMonster> enemyBattleMonsters, BattleMonster enemyEquippedMonster)
+		{
+			bool monsterNotFound = true;
+			string monsterChoice;
+
+			while (monsterNotFound)
+			{
+				Console.Clear();
+				DisplayHeader("\tEnemy Battle Monsters");
+
+				foreach (BattleMonster enemyBattleMonster in enemyBattleMonsters)
+				{
+					Console.WriteLine();
+					Console.WriteLine(enemyBattleMonster.AllBattleMonsters());
+				}
+
+				//
+				// pick enemy battle monster
+				//
+
+				Console.WriteLine();
+				Console.Write("Pick a monster to battle: ");
+				monsterChoice = Console.ReadLine();
+
+				foreach (BattleMonster enemyBattleMonster in enemyBattleMonsters)
+				{
+					if (enemyBattleMonster.Name == monsterChoice)
+					{
+						enemyEquippedMonster = enemyBattleMonster;
+
+						monsterNotFound = false;
+						break;
+					}
+				}
+				if (monsterNotFound)
+				{
+					Console.WriteLine("Unable to locate enemy battle monster.");
+					Console.WriteLine();
+					Console.WriteLine("Press any key to enter another battle monster.");
+					Console.ReadKey();
+				}
+			}
+			return enemyEquippedMonster;
+		}
+
+		static BattleMonster DisplayAndEquipYourBattleMonster(List<BattleMonster> yourBattleMonsters, BattleMonster equippedMonster)
         {
 			bool monsterNotFound = true;
 			string monsterChoice;
@@ -134,6 +310,7 @@ namespace battleMonsters
 						equippedMonster = yourBattleMonster;
 						
 						monsterNotFound = false;
+						break;
 					}
 				}
 				if (monsterNotFound)
@@ -144,10 +321,7 @@ namespace battleMonsters
                     Console.ReadKey();						
 				}
 			}
-
-
-
-			DisplayContinuePrompt();
+			return equippedMonster;
 		}
 
         static void DisplayCreateYourOwnBattleMonster(List<BattleMonster> yourBattleMonsters)
@@ -200,17 +374,35 @@ namespace battleMonsters
             DisplayContinuePrompt();
         }
 
-        static void DisplayEnemyBattleMonsters(List<BattleMonster> enemyBattleMonsters)
+        static void DisplayAllBattleMonsters(List<BattleMonster> enemyBattleMonsters, List<BattleMonster> yourBattleMonsters)
         {
+			//
+			// enemy monsters
+			//
             DisplayHeader("\tEnemy Battle Monsters");
+			Console.WriteLine("---------------------------------------------------");
 
             foreach (BattleMonster enemyBattleMonster in enemyBattleMonsters)
             {
-                Console.WriteLine();
-                Console.WriteLine(enemyBattleMonster.AllBattleMonsters());
-            }
 
-            DisplayContinuePrompt();
+                Console.WriteLine(enemyBattleMonster.AllBattleMonsters());
+
+            }
+			Console.WriteLine("---------------------------------------------------");
+
+			Console.WriteLine();
+			Console.WriteLine("\tYour Battle Monsters");
+			Console.WriteLine("---------------------------------------------------");
+
+			foreach (BattleMonster yourBattleMonster in yourBattleMonsters)
+			{
+
+				Console.WriteLine(yourBattleMonster.AllBattleMonsters());
+
+			}
+			Console.WriteLine("---------------------------------------------------");
+
+			DisplayContinuePrompt();
         }
 
         static BattleMonster InstantiateBattleMonsterFury()
@@ -251,7 +443,7 @@ namespace battleMonsters
             BattleMonster gilroy = new BattleMonster();
 
             gilroy.Name = "Gilroy";
-            gilroy.monsterElement = BattleMonster.Element.LIGHT;
+            gilroy.monsterElement = BattleMonster.Element.GRASS;
             gilroy.monsterSize = BattleMonster.Size.LARGE;
 
             return gilroy;
@@ -262,7 +454,7 @@ namespace battleMonsters
             BattleMonster kitten = new BattleMonster();
 
             kitten.Name = "Kitten";
-            kitten.monsterElement = BattleMonster.Element.DARK;
+            kitten.monsterElement = BattleMonster.Element.WATER;
             kitten.monsterSize = BattleMonster.Size.SMALL;
 
             return kitten;
