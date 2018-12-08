@@ -165,7 +165,7 @@ namespace battleMonsters
                 DisplayHeader("\t Battle Has Begun");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element has overpowered {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
-                Console.WriteLine($"{enemyEquippedMonster.Name} feints.");
+                Console.WriteLine($"{enemyEquippedMonster.Name} faints.");
                 Console.WriteLine();
                 enemyBattleMonsters.Remove(enemyEquippedMonster); 
                 Console.WriteLine("\t Press any key to leave the battle.");
@@ -180,7 +180,7 @@ namespace battleMonsters
                 DisplayHeader("\t Battle Has Begun");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element is weak against {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
-                Console.WriteLine($"{equippedMonster.Name} feints.");
+                Console.WriteLine($"{equippedMonster.Name} faints.");
                 Console.WriteLine();
                 yourBattleMonsters.Remove(equippedMonster);
                 Console.WriteLine("\t Press any key to leave the battle.");
@@ -196,7 +196,7 @@ namespace battleMonsters
                 DisplayHeader("\t Battle Has Begun");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element is weak against {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
-                Console.WriteLine($"{equippedMonster.Name} feints.");
+                Console.WriteLine($"{equippedMonster.Name} faints.");
                 Console.WriteLine();
                 yourBattleMonsters.Remove(equippedMonster);
                 Console.WriteLine("\t Press any key to leave the battle.");
@@ -227,7 +227,7 @@ namespace battleMonsters
                 DisplayHeader("\t Battle Has Begun");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element has overpowered {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
-                Console.WriteLine($"{enemyEquippedMonster.Name} feints.");
+                Console.WriteLine($"{enemyEquippedMonster.Name} faints.");
                 Console.WriteLine();
                 enemyBattleMonsters.Remove(enemyEquippedMonster);
                 Console.WriteLine("\t Press any key to leave the battle.");
@@ -242,7 +242,7 @@ namespace battleMonsters
                 DisplayHeader("\t Battle Has Begun");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element has overpowered {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
-                Console.WriteLine($"{enemyEquippedMonster.Name} feints.");
+                Console.WriteLine($"{enemyEquippedMonster.Name} faints.");
                 Console.WriteLine();
                 enemyBattleMonsters.Remove(enemyEquippedMonster);
                 Console.WriteLine("\t Press any key to leave the battle.");
@@ -257,7 +257,7 @@ namespace battleMonsters
                 DisplayHeader("\t Battle Has Begun");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterElement} element is weak against {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterElement} element!");
-                Console.WriteLine($"{equippedMonster.Name} feints.");
+                Console.WriteLine($"{equippedMonster.Name} faints.");
                 Console.WriteLine();
                 yourBattleMonsters.Remove(equippedMonster);
                 Console.WriteLine("\t Press any key to leave the battle.");
@@ -284,7 +284,7 @@ namespace battleMonsters
                 DisplayHeader("\tReturning to Battle Monsters Menu");
                 Console.WriteLine("Press any key to return to menu.");
                 enemyBattleMonsters.Remove(enemyEquippedMonster);
-                DisplayContinuePrompt();           
+                Console.ReadKey();          
             }
 			
 		}
@@ -300,7 +300,7 @@ namespace battleMonsters
                 DisplayHeader("The Battle Continues");
 
                 Console.WriteLine($"Both {equippedMonster.Name} and {enemyEquippedMonster.Name} have given it there all have.");
-                Console.WriteLine($"With {equippedMonster.Name}'s {equippedMonster.monsterSize} size and {enemyEquippedMonster.Name} {enemyEquippedMonster.monsterSize} size, they have exausted everything and both feint.");
+                Console.WriteLine($"With {equippedMonster.Name}'s {equippedMonster.monsterSize} size and {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size, they have exausted everything and both faint.");
                 yourBattleMonsters.Remove(equippedMonster);
                 enemyBattleMonsters.Remove(enemyEquippedMonster);
                 Console.WriteLine();
@@ -317,7 +317,7 @@ namespace battleMonsters
                 DisplayHeader("The Battle Continues");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size is overpowered by {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size.");
-                Console.WriteLine($"{equippedMonster.Name} feints.");
+                Console.WriteLine($"{equippedMonster.Name} faints.");
                 yourBattleMonsters.Remove(equippedMonster);
                 Console.WriteLine();
                 Console.WriteLine("\t Press any key to leave the battle ");
@@ -333,7 +333,7 @@ namespace battleMonsters
                 DisplayHeader("The Battle Continues");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size is to fast for {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size to hit.");
-                Console.WriteLine($"{enemyEquippedMonster.Name} feints from exhaustion.");
+                Console.WriteLine($"{enemyEquippedMonster.Name} faints from exhaustion.");
                 enemyBattleMonsters.Remove(enemyEquippedMonster);
                 Console.WriteLine();
                 Console.WriteLine("\t Press any key to leave the battle ");
@@ -348,7 +348,7 @@ namespace battleMonsters
                 DisplayHeader("The Battle Continues");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size overpowers {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size.");
-                Console.WriteLine($"{enemyEquippedMonster.Name} feints.");
+                Console.WriteLine($"{enemyEquippedMonster.Name} faints.");
                 enemyBattleMonsters.Remove(enemyEquippedMonster);
                 Console.WriteLine();
                 Console.WriteLine("\t Press any key to leave the battle ");
@@ -363,7 +363,7 @@ namespace battleMonsters
                 DisplayHeader("The Battle Continues");
 
                 Console.WriteLine($"Both {equippedMonster.Name} and {enemyEquippedMonster.Name} have given it there all have.");
-                Console.WriteLine($"With {equippedMonster.Name}'s {equippedMonster.monsterSize} size and {enemyEquippedMonster.Name} {enemyEquippedMonster.monsterSize} size, they have exausted everything and both feint.");
+                Console.WriteLine($"With {equippedMonster.Name}'s {equippedMonster.monsterSize} size and {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size, they have exausted everything and both faint.");
                 yourBattleMonsters.Remove(equippedMonster);
                 enemyBattleMonsters.Remove(enemyEquippedMonster);
                 Console.WriteLine();
@@ -380,7 +380,7 @@ namespace battleMonsters
                 DisplayHeader("The Battle Continues");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size is overpowered by {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size.");
-                Console.WriteLine($"{equippedMonster.Name} feints.");
+                Console.WriteLine($"{equippedMonster.Name} faints.");
                 yourBattleMonsters.Remove(equippedMonster);
                 Console.WriteLine();
                 Console.WriteLine("\t Press any key to leave the battle ");
@@ -396,7 +396,7 @@ namespace battleMonsters
                 DisplayHeader("The Battle Continues");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size is to slow to hit {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size.");
-                Console.WriteLine($"{equippedMonster.Name} feints from exhaustion.");
+                Console.WriteLine($"{equippedMonster.Name} faints from exhaustion.");
                 yourBattleMonsters.Remove(equippedMonster);
                 Console.WriteLine();
                 Console.WriteLine("\t Press any key to leave the battle ");
@@ -412,7 +412,7 @@ namespace battleMonsters
                 DisplayHeader("The Battle Continues");
 
                 Console.WriteLine($"{equippedMonster.Name}'s {equippedMonster.monsterSize} size overpowers {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size.");
-                Console.WriteLine($"{enemyEquippedMonster.Name} feints.");
+                Console.WriteLine($"{enemyEquippedMonster.Name} faints.");
                 enemyBattleMonsters.Remove(enemyEquippedMonster);
                 Console.WriteLine();
                 Console.WriteLine("\t Press any key to leave the battle ");
@@ -427,7 +427,7 @@ namespace battleMonsters
                 DisplayHeader("The Battle Continues");
 
                 Console.WriteLine($"Both {equippedMonster.Name} and {enemyEquippedMonster.Name} have given it there all have.");
-                Console.WriteLine($"With {equippedMonster.Name}'s {equippedMonster.monsterSize} size and {enemyEquippedMonster.Name} {enemyEquippedMonster.monsterSize} size, they have exausted everything and both feint.");
+                Console.WriteLine($"With {equippedMonster.Name}'s {equippedMonster.monsterSize} size and {enemyEquippedMonster.Name}'s {enemyEquippedMonster.monsterSize} size, they have exausted everything and both faint.");
                 yourBattleMonsters.Remove(equippedMonster);
                 enemyBattleMonsters.Remove(enemyEquippedMonster);
                 Console.WriteLine();
@@ -577,7 +577,7 @@ namespace battleMonsters
                 }
                 else
                 {
-                    Console.WriteLine("Please enter a valid element. [GRASS, WATER, FIRE, LIGHT, DARK]");
+                    Console.WriteLine("Please enter a valid element. [GRASS, WATER, FIRE]");
                     Console.ReadKey();
                 }
             }
@@ -663,7 +663,7 @@ namespace battleMonsters
 
             gargle.Name = "Gargle";
             gargle.monsterElement = BattleMonster.Element.WATER;
-            gargle.monsterSize = BattleMonster.Size.SMALL;
+            gargle.monsterSize = BattleMonster.Size.LARGE;
 
             return gargle;
         }
@@ -701,7 +701,7 @@ namespace battleMonsters
         {
             Console.Clear();
 
-            Console.WriteLine("\n\nBattle Monsters!!!!!!\n\n");
+            Console.WriteLine("\nBattle Monsters!");
             
             DisplayContinuePrompt();
         }
@@ -718,7 +718,7 @@ namespace battleMonsters
         {
             DisplayHeader("Closing Screen");
             Console.WriteLine();
-            Console.WriteLine("Its been great.");
+            Console.WriteLine("Thank you for playing Battle Monsters.");
             Console.WriteLine();
             DisplayContinuePrompt();
         }
