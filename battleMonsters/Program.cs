@@ -10,7 +10,18 @@ namespace battleMonsters
     {
         static void Main(string[] args)
         {
-            bool runApp = true;
+			// **************************************************
+			//
+			// Title: Battle Monsters
+			// Description: Game
+			// Application Type: Console
+			// Author: (Beau B DeYoung)
+			// Dated Created: (12/08/2018)
+			// Last Modified: (12/10/2018)
+			//
+			// **************************************************
+
+			bool runApp = true;
 
 			//
 			// instantiate battle monsters
